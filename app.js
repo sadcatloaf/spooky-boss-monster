@@ -13,7 +13,13 @@ const heroes = [
     {
         name: 'Meera',
         type: 'witch',
-        damage: 10,
+        damage: 3,
+        health: 50
+    },
+    {
+        name: 'doug',
+        type: 'witch',
+        damage: 12,
         health: 50
     }
 ]
@@ -21,36 +27,55 @@ const heroes = [
 const boss = {
     health: 100,
     maxHealth: 100,
-    damage: 5,
-    level: 1
+    damage: 7,
+    level: 2
 }
 //#endregion
-
-
-function decreaseBossHealth() {
-    const trioofPumpkins = boss
-    trioofPumpkins.health -= 15
-    console.log('this is health', trioofPumpkins)
-    drawHealth()
-}
-
-
-// function decreaseBossHealth() {
-//     for (let i = 0; i < heroes.length; i++) {
-//         const heroe = heroes[i]
-//         let healthDecrease = 15
-//         console.log('health', healthDecrease)
-//     }
-// }
-
 
 
 
 //#region 🧠 Logic
 
+function decreaseBossHealth() {
+    {
+        const trioofPumpkins = boss
+        trioofPumpkins.health -= calculateHeroDmg()
+        console.log('this is health', trioofPumpkins)
 
+        if (boss.health < 0) {
+            boss.health = 0
+        }
+
+        drawHealth()
+
+    }
+}
+
+
+function calculateHeroDmg() {
+    let totalDmg = 0
+    for (let i = 0; i < heroes.length; i++) {
+        const hero = heroes[i]
+        console.log('hero', i, hero)
+        totalDmg += hero.damage
+
+        console.log('damage', totalDmg)
+    }
+
+    return totalDmg
+}
+
+function bossPunch() {
+    for (let i = 0; i < heroes.length; i++) {
+        const hero = heroes[i]
+        hero.health -= boss.damage * boss.level
+        console.log('hero', hero)
+    }
+    // TODO Invoke drawhero health function
+}
+
+setInterval(bossPunch, 5000)
 //#endregion
-
 
 
 //#region 🖌️ Drawing
